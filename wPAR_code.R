@@ -8,7 +8,7 @@ require(dplyr); options(scipen=999)
 
 
 # The "rawdata" .csv file can be found here:
-# https://docs.google.com/spreadsheets/d/1jxCXQf054NCfnOfiwlImfbZDyCRopMxpOlCBWy-VZ-c/edit?usp=sharing
+# https://docs.google.com/spreadsheets/d/1jxCXQf054NCfnOfiwlImfbZDyCRopMxpOlCBWy-VZ-c/edit#gid=0
 
 
 # LOAD DATA
