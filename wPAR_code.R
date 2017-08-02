@@ -5,11 +5,12 @@
 
 require(dplyr); options(scipen=999)
 
+# The below code will generate both the "wPAR.Final" table (season-by-season data for all players)
+# and the "wPAR.career" table (career totals). Various other tables are created as well. 
+
 # The "rawdata" .csv file can be found here:
 # https://docs.google.com/spreadsheets/d/1jxCXQf054NCfnOfiwlImfbZDyCRopMxpOlCBWy-VZ-c/edit?usp=sharing
  
-# The below code will generate both the "wPAR.Final" table that contains season-by-season data for all players
-# as well as the "wPAR.career" table that contains career totals.
 
 
 # LOAD DATA
