@@ -3,7 +3,6 @@
 #################################################################################
 
 
-setwd("~/Documents/RStudio/wPAR")
 require(dplyr); options(scipen=999)
 
 
@@ -13,7 +12,6 @@ require(dplyr); options(scipen=999)
 
 # LOAD DATA
 rawdata <- read.csv("rawdata.csv")
-rawdata <- readRDS("rawdata.rds")
 rawdataXtra <- rawdata %>% select(Player.NHL, Season, Mid.Age, Total.GS)
 
 
@@ -162,9 +160,8 @@ wPscale.ind <- fun.createscale()
 
 
 
-##############   RUN AGAIN - SCALE FOR SEASON   ############## 
 
-
+##############   SCALE   ############## 
 
 # Actual wPAA weights - SCALE
 fun.scaleweights <- function(position) { 
