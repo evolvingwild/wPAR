@@ -3,11 +3,16 @@
 #################################################################################
 
 
-setwd("~/Documents/RStudio/hockey")
+setwd("~/Documents/RStudio/wPAR")
 require(dplyr); options(scipen=999)
 
 
+# The "rawdata" .csv file can be found here:
+# https://docs.google.com/spreadsheets/d/1jxCXQf054NCfnOfiwlImfbZDyCRopMxpOlCBWy-VZ-c/edit?usp=sharing
+
+
 # LOAD DATA
+rawdata <- read.csv("rawdata.csv")
 rawdata <- readRDS("rawdata.rds")
 rawdataXtra <- rawdata %>% select(Player.NHL, Season, Mid.Age, Total.GS)
 
@@ -28,7 +33,7 @@ names(wPAAweights) <- c("Season",	"G",	"A1",	"A2",
 wPAAweights$Season <- c(20072008, 20082009,	20092010,	20102011,	20112012,	
                         20122013,	20132014,	20142015,	20152016,	20162017)
 
-
+ 
 # Regression Weights
 baseweightsF <- wPAAweights %>% 
   mutate(G = 0.7474,
