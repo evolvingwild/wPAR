@@ -28,13 +28,13 @@ counts_adjust_5v5 <- readRDS("counts_adjust_5v5.rds")
 
 
 ## Objects - UPDATED event_types to match HTM names throughout (including functions below)
-c("SHOT", "GOAL") -> st.shot_events
-c("SHOT", "GOAL", "MISS") -> st.fenwick_events
-c("SHOT", "GOAL", "MISS", "BLOCK") -> st.corsi_events
-c("3v3", "5v5", "4v4", "5v4", "4v5", 
-  "5v3", "3v5", "4v3", "3v4", "5vE", 
-  "Ev5", "4vE", "Ev4", "3vE", "Ev3") %>% as.factor() -> st.strength_states
-
+st.shot_events <- c("SHOT", "GOAL")
+st.fenwick_events <- c("SHOT", "GOAL", "MISS")
+st.corsi_events <- c("SHOT", "GOAL", "MISS", "BLOCK")
+st.strength_states <- c("3v3", "5v5", "4v4", "5v4", "4v5", 
+                        "5v3", "3v5", "4v3", "3v4", "5vE", 
+                        "Ev5", "4vE", "Ev4", "3vE", "Ev3") %>% 
+  as.factor()
 
 
 
@@ -263,9 +263,7 @@ APM_test_upd <- fun.APM(pbp_part, 10)
 
 
 
-
-
-
+### Testing / Misc loaded locally
 
 TOI_1617 <- games_5v5_1617 %>% ungroup() %>% group_by(player) %>% 
   summarise(TOI_5v5 = sum(TOI_5v5), 
