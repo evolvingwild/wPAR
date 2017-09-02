@@ -64,18 +64,17 @@ Qualified <- games_5v5_1617 %>%
   left_join(., player_position) %>% 
   mutate(qual = ifelse(TOI_5v5 > 337 & position == 1, 1, 
                        ifelse(TOI_5v5 > 410 & position == 2, 1, 0)
-  )
-  ) %>% 
+                       )
+         ) %>% 
   select(player, qual)
 
 
 # APM All
 fun.APM <- function(data, folds) {
   # BEFORE running function, load:
-  #     player_position
-  #     scoreadj
-  #
-  # Change GF60 to CF 60 or vice-versa depending on situation
+  ## player_position
+  ## scoreadj
+  # Change GF60 to CF60 or vice-versa depending on situation
   
   
   ## Home
@@ -89,7 +88,7 @@ fun.APM <- function(data, folds) {
                                          event_team == home_team, (1*scoreadj[home_lead, 2]), 0))/length)*3600, 2), 
               GF60 = round((sum(ifelse(event_type == "GOAL" & 
                                          event_team == home_team, 1, 0))/length)*3600, 2)
-    ) %>% 
+              ) %>% 
     data.frame() %>% 
     ungroup() %>% 
     add_column(., n = 0, .before = 1) %>% 
@@ -113,10 +112,11 @@ fun.APM <- function(data, folds) {
     a6 <- unique(sub_data1$away_on_6)
     
     mat <- data.frame(matrix(nrow = (length(h1) + length(h2) + length(h3) + length(h4) + length(h5) + length(h6) + 
-                                       length(a1) + length(a2) + length(a3) + length(a4) + length(a5) + length(a6)
-    ), 
-    ncol = 1)
-    )
+                                     length(a1) + length(a2) + length(a3) + length(a4) + length(a5) + length(a6)
+                                     ), 
+                             ncol = 1)
+                      )
+    
     names(mat) <- "player"
     mat$player <- c(h1, h2, h3, h4, h5, h6, a1, a2, a3, a4, a5, a6)
     mat_unique <- data.frame(mat[!duplicated(mat[,c("player")]), ])
@@ -135,26 +135,24 @@ fun.APM <- function(data, folds) {
     
     test.H[paste(i, ".o", sep="")] <- 
       ifelse(test.H$home_on_1 == i & test.H$home_on_1 != test.H$goalie & x > 0 | 
-               test.H$home_on_2 == i & test.H$home_on_2 != test.H$goalie & x > 0 | 
-               test.H$home_on_3 == i & test.H$home_on_3 != test.H$goalie & x > 0 | 
-               test.H$home_on_4 == i & test.H$home_on_4 != test.H$goalie & x > 0 | 
-               test.H$home_on_5 == i & test.H$home_on_5 != test.H$goalie & x > 0 | 
-               test.H$home_on_6 == i & test.H$home_on_6 != test.H$goalie & x > 0, 1, 0
-      )
-  }
+             test.H$home_on_2 == i & test.H$home_on_2 != test.H$goalie & x > 0 | 
+             test.H$home_on_3 == i & test.H$home_on_3 != test.H$goalie & x > 0 | 
+             test.H$home_on_4 == i & test.H$home_on_4 != test.H$goalie & x > 0 | 
+             test.H$home_on_5 == i & test.H$home_on_5 != test.H$goalie & x > 0 | 
+             test.H$home_on_6 == i & test.H$home_on_6 != test.H$goalie & x > 0, 1, 0)
+    }
   # Home Defense
   for(i in mat_unique$player) {
     x <- mat_unique$qual[match(i, mat_unique$player)]
     
     test.H[paste(i, ".d", sep="")] <- 
       ifelse(test.H$away_on_1 == i & x > 0 | 
-               test.H$away_on_2 == i & x > 0 | 
-               test.H$away_on_3 == i & x > 0 | 
-               test.H$away_on_4 == i & x > 0 | 
-               test.H$away_on_5 == i & x > 0 | 
-               test.H$away_on_6 == i & x > 0, 1, 0
-      )
-  }
+             test.H$away_on_2 == i & x > 0 | 
+             test.H$away_on_3 == i & x > 0 | 
+             test.H$away_on_4 == i & x > 0 | 
+             test.H$away_on_5 == i & x > 0 | 
+             test.H$away_on_6 == i & x > 0, 1, 0)
+    }
   
   
   ## Away
@@ -168,7 +166,7 @@ fun.APM <- function(data, folds) {
                                          event_team == away_team, (1*scoreadj[home_lead, 3]), 0))/length)*3600, 2), 
               GF60 = round((sum(ifelse(event_type == "GOAL" & 
                                          event_team == away_team, 1, 0))/length)*3600, 2)
-    ) %>% 
+              ) %>% 
     data.frame() %>% 
     ungroup() %>% 
     add_column(., n = 0, .before = 1) %>% 
@@ -184,26 +182,24 @@ fun.APM <- function(data, folds) {
     
     test.A[paste(i, ".o", sep="")] <- 
       ifelse(test.A$away_on_1 == i & test.A$away_on_1 != test.A$goalie & x > 0 | 
-               test.A$away_on_2 == i & test.A$away_on_2 != test.A$goalie & x > 0 | 
-               test.A$away_on_3 == i & test.A$away_on_3 != test.A$goalie & x > 0 | 
-               test.A$away_on_4 == i & test.A$away_on_4 != test.A$goalie & x > 0 | 
-               test.A$away_on_5 == i & test.A$away_on_5 != test.A$goalie & x > 0 | 
-               test.A$away_on_6 == i & test.A$away_on_6 != test.A$goalie & x > 0, 1, 0
-      )
-  }
+             test.A$away_on_2 == i & test.A$away_on_2 != test.A$goalie & x > 0 | 
+             test.A$away_on_3 == i & test.A$away_on_3 != test.A$goalie & x > 0 | 
+             test.A$away_on_4 == i & test.A$away_on_4 != test.A$goalie & x > 0 | 
+             test.A$away_on_5 == i & test.A$away_on_5 != test.A$goalie & x > 0 | 
+             test.A$away_on_6 == i & test.A$away_on_6 != test.A$goalie & x > 0, 1, 0)
+    }
   # Away Defense
   for(i in mat_unique$player) {
     x <- mat_unique$qual[match(i, mat_unique$player)]
     
     test.A[paste(i, ".d", sep="")] <- 
       ifelse(test.A$home_on_1 == i & x > 0 | 
-               test.A$home_on_2 == i & x > 0 | 
-               test.A$home_on_3 == i & x > 0 | 
-               test.A$home_on_4 == i & x > 0 | 
-               test.A$home_on_5 == i & x > 0 | 
-               test.A$home_on_6 == i & x > 0, 1, 0
-      )
-  }
+             test.A$home_on_2 == i & x > 0 | 
+             test.A$home_on_3 == i & x > 0 | 
+             test.A$home_on_4 == i & x > 0 | 
+             test.A$home_on_5 == i & x > 0 | 
+             test.A$home_on_6 == i & x > 0, 1, 0)
+    }
   
   
   ## Combine Home / Away (O / D)
@@ -223,12 +219,19 @@ fun.APM <- function(data, folds) {
   lambda <- cv.glmnet(test_sparse, 
                       #GF60, 
                       CF60, 
-                      weights = length, nfolds = folds)
+                      weights = length, 
+                      nfolds = folds
+                      )
+  
   lambda_min <- lambda$lambda.min 
   ridge <- glmnet(test_sparse, 
                   #GF60, 
                   CF60, 
-                  family = c("gaussian"), length, alpha = 0, lambda = lambda_min)
+                  family = c("gaussian"), 
+                  length, 
+                  alpha = 0, 
+                  lambda = lambda_min
+                  )
   
   
   # Bind into df
@@ -240,10 +243,10 @@ fun.APM <- function(data, folds) {
     # Remove .d / .o suffixes
     APM_test_d <- APM_test %>% filter(grepl(".d", APM_names), APM_names != "is_home") %>% 
       mutate(APM_names = gsub(".d", "", APM_names)
-      ) %>% rename(Def = X1)
+             ) %>% rename(Def = X1)
     APM_test_o <- APM_test %>% filter(grepl(".o", APM_names), APM_names != "is_home") %>% 
       mutate(APM_names = gsub(".o", "", APM_names)
-      ) %>% rename(Off = X1)
+             ) %>% rename(Off = X1)
     
     # Join
     APM_all <- APM_test_o %>% left_join(., APM_test_d) %>% 
