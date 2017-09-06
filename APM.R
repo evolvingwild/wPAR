@@ -450,11 +450,11 @@ fun.APM_dummy <- function(data, type) {
     test.A <- data %>% group_by(home_on_1, home_on_2, home_on_3, home_on_4, home_on_5, home_on_6, 
                                 away_on_1, away_on_2, away_on_3, away_on_4, away_on_5, away_on_6) %>% 
       summarise(team = first(away_team), 
-                length = sum(event_length), 
-                xGF60 = round((sum(ifelse(event_type %in% st.fenwick_events & 
-                                            event_team == away_team, (prob_goal*(1*scoreadj[home_lead, 3])), 0))/length)*3600, 2), 
+                length = sum(event_length),
                 CF60 = round((sum(ifelse(event_type %in% st.corsi_events & 
-                                           event_team == away_team, (1*scoreadj[home_lead, 3]), 0))/length)*3600, 2)
+                                         event_team == away_team, (1*scoreadj[home_lead, 3]), 0))/length)*3600, 2),
+                xGF60 = round((sum(ifelse(event_type %in% st.fenwick_events & 
+                                            event_team == away_team, (prob_goal*(1*scoreadj[home_lead, 3])), 0))/length)*3600, 2)
                 ) %>% 
       ungroup() %>% 
       add_column(., n = 0, .before = 1) %>% 
