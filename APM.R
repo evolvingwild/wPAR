@@ -101,7 +101,7 @@ fun.pbp_prepare <- function(data) {
            home_lead = home_lead + 4, 
            event_length = ifelse(is.na(event_length), 0, event_length), 
            event_team = ifelse(is.na(event_team), 0, event_team)
-    )
+           )
   
   pbp_part <- pbp_part %>% 
     select(home_on_1:away_on_6, 
@@ -112,7 +112,7 @@ fun.pbp_prepare <- function(data) {
            event_type, 
            home_lead, 
            prob_goal
-    )
+           )
 }
 pbp_part <- fun.pbp_prepare(pbp_full)
 
@@ -225,7 +225,7 @@ fun.APM_dummy <- function(data, type) {
                 length = sum(event_length),
                 GF60 = round((sum(ifelse(event_type == st.goal_ID & 
                                            event_team == home_team, 1, 0))/length)*3600, 2)
-      ) %>% 
+                ) %>% 
       ungroup() %>% 
       add_column(., n = 0, .before = 1) %>% 
       mutate(n = as.numeric(row_number()), 
@@ -249,10 +249,11 @@ fun.APM_dummy <- function(data, type) {
       a6 <- unique(sub_data1$away_on_6)
       
       mat <- data.frame(matrix(nrow = (length(h1) + length(h2) + length(h3) + length(h4) + length(h5) + length(h6) + 
-                                         length(a1) + length(a2) + length(a3) + length(a4) + length(a5) + length(a6)
-      ), 
-      ncol = 1)
-      )
+                                       length(a1) + length(a2) + length(a3) + length(a4) + length(a5) + length(a6)
+                                       ), 
+                               ncol = 1
+                               )
+                        )
       names(mat) <- "player"
       mat$player <- c(h1, h2, h3, h4, h5, h6, a1, a2, a3, a4, a5, a6)
       mat_unique <- data.frame(mat[!duplicated(mat[,c("player")]), ])
@@ -275,12 +276,12 @@ fun.APM_dummy <- function(data, type) {
       
       test.H[paste(name, ".o", sep="")] <- 
         ifelse(test.H$home_on_1 == name & name != test.H$home_goalie & name != test.H$away_goalie | 
-                 test.H$home_on_2 == name & name != test.H$home_goalie & name != test.H$away_goalie |
-                 test.H$home_on_3 == name & name != test.H$home_goalie & name != test.H$away_goalie |
-                 test.H$home_on_4 == name & name != test.H$home_goalie & name != test.H$away_goalie |
-                 test.H$home_on_5 == name & name != test.H$home_goalie & name != test.H$away_goalie |
-                 test.H$home_on_6 == name & name != test.H$home_goalie & name != test.H$away_goalie, 1, 0
-        )
+               test.H$home_on_2 == name & name != test.H$home_goalie & name != test.H$away_goalie |
+               test.H$home_on_3 == name & name != test.H$home_goalie & name != test.H$away_goalie |
+               test.H$home_on_4 == name & name != test.H$home_goalie & name != test.H$away_goalie |
+               test.H$home_on_5 == name & name != test.H$home_goalie & name != test.H$away_goalie |
+               test.H$home_on_6 == name & name != test.H$home_goalie & name != test.H$away_goalie, 1, 0
+               )
     }
     print("home_loop_d")
     # Home Defense
@@ -288,12 +289,12 @@ fun.APM_dummy <- function(data, type) {
       
       test.H[paste(name, ".d", sep="")] <- 
         ifelse(test.H$away_on_1 == name & name != test.H$home_goalie |
-                 test.H$away_on_2 == name & name != test.H$home_goalie |
-                 test.H$away_on_3 == name & name != test.H$home_goalie |
-                 test.H$away_on_4 == name & name != test.H$home_goalie |
-                 test.H$away_on_5 == name & name != test.H$home_goalie |
-                 test.H$away_on_6 == name & name != test.H$home_goalie, 1, 0
-        )
+               test.H$away_on_2 == name & name != test.H$home_goalie |
+               test.H$away_on_3 == name & name != test.H$home_goalie |
+               test.H$away_on_4 == name & name != test.H$home_goalie |
+               test.H$away_on_5 == name & name != test.H$home_goalie |
+               test.H$away_on_6 == name & name != test.H$home_goalie, 1, 0
+               )
     }
     
     test.H <- data.matrix(test.H)
@@ -311,7 +312,7 @@ fun.APM_dummy <- function(data, type) {
                 length = sum(event_length), 
                 GF60 = round((sum(ifelse(event_type == st.goal_ID & 
                                            event_team == away_team, 1, 0))/length)*3600, 2)
-      ) %>% 
+                ) %>% 
       ungroup() %>% 
       add_column(., n = 0, .before = 1) %>% 
       mutate(n = row_number(), 
@@ -323,12 +324,12 @@ fun.APM_dummy <- function(data, type) {
       
       test.A[paste(name, ".o", sep="")] <- 
         ifelse(test.A$away_on_1 == name & name != test.A$away_goalie & name != test.A$home_goalie | 
-                 test.A$away_on_2 == name & name != test.A$away_goalie & name != test.A$home_goalie |
-                 test.A$away_on_3 == name & name != test.A$away_goalie & name != test.A$home_goalie |
-                 test.A$away_on_4 == name & name != test.A$away_goalie & name != test.A$home_goalie |
-                 test.A$away_on_5 == name & name != test.A$away_goalie & name != test.A$home_goalie |
-                 test.A$away_on_6 == name & name != test.A$away_goalie & name != test.A$home_goalie, 1, 0
-        )
+               test.A$away_on_2 == name & name != test.A$away_goalie & name != test.A$home_goalie |
+               test.A$away_on_3 == name & name != test.A$away_goalie & name != test.A$home_goalie |
+               test.A$away_on_4 == name & name != test.A$away_goalie & name != test.A$home_goalie |
+               test.A$away_on_5 == name & name != test.A$away_goalie & name != test.A$home_goalie |
+               test.A$away_on_6 == name & name != test.A$away_goalie & name != test.A$home_goalie, 1, 0
+               )
     }
     print("away_loop_d")
     # Away Defense
@@ -336,12 +337,12 @@ fun.APM_dummy <- function(data, type) {
       
       test.A[paste(name, ".d", sep="")] <- 
         ifelse(test.A$home_on_1 == name & name != test.A$away_goalie |
-                 test.A$home_on_2 == name & name != test.A$away_goalie |
-                 test.A$home_on_3 == name & name != test.A$away_goalie |
-                 test.A$home_on_4 == name & name != test.A$away_goalie |
-                 test.A$home_on_5 == name & name != test.A$away_goalie |
-                 test.A$home_on_6 == name & name != test.A$away_goalie, 1, 0
-        )
+               test.A$home_on_2 == name & name != test.A$away_goalie |
+               test.A$home_on_3 == name & name != test.A$away_goalie |
+               test.A$home_on_4 == name & name != test.A$away_goalie |
+               test.A$home_on_5 == name & name != test.A$away_goalie |
+               test.A$home_on_6 == name & name != test.A$away_goalie, 1, 0
+               )
     }
     
     test.A <- data.matrix(test.A)
@@ -370,7 +371,7 @@ fun.APM_dummy <- function(data, type) {
                                            event_team == home_team, (1*scoreadj[home_lead, 2]), 0))/length)*3600, 2),
                 xGF60 = round((sum(ifelse(event_type %in% st.fenwick_events & 
                                             event_team == home_team, (prob_goal*(1*scoreadj[home_lead, 2])), 0))/length)*3600, 2)
-      ) %>% 
+                ) %>% 
       ungroup() %>% 
       add_column(., n = 0, .before = 1) %>% 
       mutate(n = as.numeric(row_number()), 
@@ -394,10 +395,11 @@ fun.APM_dummy <- function(data, type) {
       a6 <- unique(sub_data1$away_on_6)
       
       mat <- data.frame(matrix(nrow = (length(h1) + length(h2) + length(h3) + length(h4) + length(h5) + length(h6) + 
-                                         length(a1) + length(a2) + length(a3) + length(a4) + length(a5) + length(a6)
-      ), 
-      ncol = 1)
-      )
+                                       length(a1) + length(a2) + length(a3) + length(a4) + length(a5) + length(a6)
+                                       ), 
+                               ncol = 1
+                               )
+                        )
       names(mat) <- "player"
       mat$player <- c(h1, h2, h3, h4, h5, h6, a1, a2, a3, a4, a5, a6)
       mat_unique <- data.frame(mat[!duplicated(mat[,c("player")]), ])
@@ -417,12 +419,12 @@ fun.APM_dummy <- function(data, type) {
       
       test.H[paste(name, ".o", sep="")] <- 
         ifelse(test.H$home_on_1 == name | 
-                 test.H$home_on_2 == name |
-                 test.H$home_on_3 == name |
-                 test.H$home_on_4 == name |
-                 test.H$home_on_5 == name |
-                 test.H$home_on_6 == name, 1, 0
-        )
+               test.H$home_on_2 == name |
+               test.H$home_on_3 == name |
+               test.H$home_on_4 == name |
+               test.H$home_on_5 == name |
+               test.H$home_on_6 == name, 1, 0
+               )
     }
     print("home_loop_d")
     # Home Defense
@@ -430,12 +432,12 @@ fun.APM_dummy <- function(data, type) {
       
       test.H[paste(name, ".d", sep="")] <- 
         ifelse(test.H$away_on_1 == name |
-                 test.H$away_on_2 == name |
-                 test.H$away_on_3 == name |
-                 test.H$away_on_4 == name |
-                 test.H$away_on_5 == name |
-                 test.H$away_on_6 == name, 1, 0
-        )
+               test.H$away_on_2 == name |
+               test.H$away_on_3 == name |
+               test.H$away_on_4 == name |
+               test.H$away_on_5 == name |
+               test.H$away_on_6 == name, 1, 0
+               )
     }
     
     test.H <- data.matrix(test.H)
@@ -453,7 +455,7 @@ fun.APM_dummy <- function(data, type) {
                                             event_team == away_team, (prob_goal*(1*scoreadj[home_lead, 3])), 0))/length)*3600, 2), 
                 CF60 = round((sum(ifelse(event_type %in% st.corsi_events & 
                                            event_team == away_team, (1*scoreadj[home_lead, 3]), 0))/length)*3600, 2)
-      ) %>% 
+                ) %>% 
       ungroup() %>% 
       add_column(., n = 0, .before = 1) %>% 
       mutate(n = row_number(), 
@@ -465,12 +467,12 @@ fun.APM_dummy <- function(data, type) {
       
       test.A[paste(name, ".o", sep="")] <- 
         ifelse(test.A$away_on_1 == name | 
-                 test.A$away_on_2 == name |
-                 test.A$away_on_3 == name |
-                 test.A$away_on_4 == name |
-                 test.A$away_on_5 == name |
-                 test.A$away_on_6 == name, 1, 0
-        )
+               test.A$away_on_2 == name |
+               test.A$away_on_3 == name |
+               test.A$away_on_4 == name |
+               test.A$away_on_5 == name |
+               test.A$away_on_6 == name, 1, 0
+               )
     }
     print("away_loop_d")
     # Away Defense
@@ -478,12 +480,12 @@ fun.APM_dummy <- function(data, type) {
       
       test.A[paste(name, ".d", sep="")] <- 
         ifelse(test.A$home_on_1 == name |
-                 test.A$home_on_2 == name |
-                 test.A$home_on_3 == name |
-                 test.A$home_on_4 == name |
-                 test.A$home_on_5 == name |
-                 test.A$home_on_6 == name, 1, 0
-        )
+               test.A$home_on_2 == name |
+               test.A$home_on_3 == name |
+               test.A$home_on_4 == name |
+               test.A$home_on_5 == name |
+               test.A$home_on_6 == name, 1, 0
+               )
     }
     
     test.A <- data.matrix(test.A)
@@ -560,10 +562,10 @@ fun.APM_bind <- function() {
   # Remove .d / .o suffixes
   APM_test_d <- APM_test %>% filter(grepl(".d", APM_names), APM_names != "is_home") %>% 
     mutate(APM_names = gsub(".d", "", APM_names)
-    ) %>% rename(Def = X1)
+           ) %>% rename(Def = X1)
   APM_test_o <- APM_test %>% filter(grepl(".o", APM_names), APM_names != "is_home") %>% 
     mutate(APM_names = gsub(".o", "", APM_names)
-    ) %>% rename(Off = X1)
+           ) %>% rename(Off = X1)
   
   # Join
   APM_all <- APM_test_o %>% left_join(., APM_test_d) %>% 
