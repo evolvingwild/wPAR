@@ -29,7 +29,7 @@ scoreadj <- read.csv("ScoreAdj.csv")
 # Setup 
 ################################
 
-# Qualifying TOI
+# Qualifying TOI 
 
 # Goalie Qualifying
 fun.goalie_qual <- function(data, G_cutoff) {
